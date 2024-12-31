@@ -22,10 +22,14 @@ const Login = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
+        if (!username.trim() || !password.trim()) {
+            alert("Please fill out all fields!");
+            return;
+        }
         try {
             const response = await axios.post("http://localhost:3001/auth/login", {username,password});
             if(response.data.verify === "verify"){
-                console.log("done");
+                console.log("User logged");
                 setCookies("access_token", response.data.token);
                 window.localStorage.setItem("userID", response.data.userID);
                 navigate("/");
@@ -54,6 +58,10 @@ const Register = () => {
     // getting api for register
     const onSubmit = async (event) => {
         event.preventDefault();
+        if (!username.trim() || !password.trim()) {
+            alert("Please fill out all fields!");
+            return;
+        }
         try{
             await axios.post("http://localhost:3001/auth/register", {username, password});
             alert("Registration Completed! Now Login.")

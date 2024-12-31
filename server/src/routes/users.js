@@ -6,6 +6,8 @@ import { UserModel } from "../models/Users.js"
 const router = express.Router()
 
 router.post("/register", async (req, res) => {
+    console.log("Request Body:", req.body);
+
     const { username, password } = req.body;
 
     const user = await UserModel.findOne({ username });
@@ -41,3 +43,15 @@ router.post("/login", async (req, res) => {
 
 
 export {router as userRouter };
+
+export const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if(token) {
+        jwt.verify(token, "secret", (err) => {
+            if (err) return res.sendStatus(403);
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+}
