@@ -34,7 +34,8 @@ export const CreateRecipe = () => {
     const addIngredients = () => {
         setRecipe({...recipe, ingredients: [...recipe.ingredients, ""] });
     };
-    console.log(recipe);
+
+    // console.log(recipe);
 
     const onSubmit = async (event) => {
         event.preventDefault();

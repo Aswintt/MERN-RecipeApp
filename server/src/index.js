@@ -13,10 +13,10 @@ app.use(cors());
 app.use("/auth" , userRouter);
 app.use("/recipes" , recipesRouter);
 
-mongoose.connect(
-    "mongodb+srv://azinty:aziApp001@recipez.ia3us.mongodb.net/recipez?retryWrites=true&w=majority&appName=recipez"
-);
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => console.error('Error connecting to MongoDB:', err));
 
 app.listen(3001, ()=>{
-    console.log("Server STARTED!!!")
+    console.log("Server STARTED...!!!")
 });

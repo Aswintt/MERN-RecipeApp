@@ -6,4 +6,4 @@ api/
 
 # Optional: Ignore logs and environment files
 *.log
-.env
+*.env
