@@ -1,3 +1,4 @@
+import './home.css';
 import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
@@ -56,7 +57,7 @@ export const Home = () => {
 
   return (
     <div>
-      <h1>Recipes</h1>
+      <h1 className='headhm1'>Recipes</h1>
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe._id}>

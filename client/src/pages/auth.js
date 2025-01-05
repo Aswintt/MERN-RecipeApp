@@ -1,3 +1,4 @@
+import './auth.css';
 import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";

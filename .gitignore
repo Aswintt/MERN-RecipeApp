@@ -7,3 +7,4 @@ api/
 # Optional: Ignore logs and environment files
 *.log
 *.env
+client/src/pages/txt.txt
