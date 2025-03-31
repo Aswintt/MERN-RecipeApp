@@ -55,7 +55,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
         username,
         password,
       });
@@ -94,7 +94,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
         username,
         password,
       });

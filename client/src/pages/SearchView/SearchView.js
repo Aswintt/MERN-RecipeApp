@@ -12,7 +12,7 @@ const SearchView = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/recipes/search/${query}`
+          `${process.env.REACT_APP_SERVER_URL}/recipes/search/${query}`
         );
         setRecipes(response.data);
       } catch (error) {

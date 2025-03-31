@@ -10,7 +10,7 @@ const DetailView = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/recipes/${slug}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/recipes/${slug}`)
       .then((response) => {
         setRecipe(response.data);
         setLoading(false);

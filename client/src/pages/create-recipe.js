@@ -42,7 +42,7 @@ export const CreateRecipe = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/recipes", recipe, {
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/recipes`, recipe, {
         headers: { authorization: cookies.access_token },
       });
       alert("Recipe Created!");
