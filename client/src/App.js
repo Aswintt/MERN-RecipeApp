@@ -8,14 +8,15 @@ import { SavedRecipes } from "./pages/saved-recipes";
 import Navbar from "./components/Navbar/navbar.js";
 import DetailView from "./pages/DetailView/DetailView.js";
 import SearchView from "./pages/SearchView/SearchView.js";
-
+import Landing from "./pages/Landing/Landing.js";
 function App() {
   return (
     <div className="App">
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/recipes" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/create-recipe" element={<CreateRecipe />} />
           <Route path="/recipe/:slug" element={<DetailView />} />

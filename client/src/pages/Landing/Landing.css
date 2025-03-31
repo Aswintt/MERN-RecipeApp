@@ -1,0 +1,102 @@
+/* Main Landing Page Container */
+.landing-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background: url("/food-bg.jpg") no-repeat center center/cover;
+  }
+  
+  /* Landing Page Content */
+  .landing-content {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+  }
+  
+  /* Main Title */
+  .landing-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Quote Styling */
+  .landing-quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  /* Description */
+  .landing-description {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 25px;
+  }
+  
+  /* Buttons Container */
+  .landing-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  /* Buttons */
+  .landing-btn {
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
+  
+  .explore-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .create-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .explore-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .landing-content {
+      padding: 20px;
+    }
+  
+    .landing-title {
+      font-size: 2rem;
+    }
+  
+    .landing-quote {
+      font-size: 1rem;
+    }
+  
+    .landing-description {
+      font-size: 0.9rem;
+    }
+  
+    .landing-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px !important; /* Adds space between buttons */
+    }
+  }
+  

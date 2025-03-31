@@ -41,10 +41,12 @@ const Navbar = () => {
 
   return (
     <nav className="navx-navbar">
-      <div className="navx-logo">
-        <img src="/rp-logo.png" alt="Logo" />
-        <h1>Recipe Finder</h1>
-      </div>
+      <Link to="/" className="recipe-link">
+        <div className="navx-logo">
+          <img src="/rp-logo.png" alt="Logo" />
+          <h1>Recipe Finder</h1>
+        </div>
+      </Link>
 
       {/* Hamburger Menu Icon */}
       <div className="navx-burger" onClick={toggleMenu}>
@@ -55,8 +57,12 @@ const Navbar = () => {
 
       {/* Nav Links (Original Menu & Mobile Dropdown) */}
       <div className={`navx-links ${isMenuOpen ? "mobile-active" : ""}`}>
-        <Link to="/" className="navx-link" onClick={() => setIsMenuOpen(false)}>
-          Home
+        <Link
+          to="/recipes"
+          className="navx-link"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Recipes
         </Link>
         <Link
           to="/create-recipe"
@@ -65,13 +71,25 @@ const Navbar = () => {
         >
           Create Recipe
         </Link>
+        <form onSubmit={handleSearch} className="navx-search">
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="navx-search-input"
+          />
+          <button type="submit" className="navx-search-btn">
+            Search
+          </button>
+        </form>
         {!cookies.access_token ? (
           <Link
             to="/auth"
             className="navx-link"
             onClick={() => setIsMenuOpen(false)}
           >
-            Login/Register
+            Signin/Signup
           </Link>
         ) : (
           <>
@@ -82,19 +100,6 @@ const Navbar = () => {
             >
               Saved Recipes
             </Link>
-
-            <form onSubmit={handleSearch} className="navx-search">
-              <input
-                type="text"
-                placeholder="Search recipes..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="navx-search-input"
-              />
-              <button type="submit" className="navx-search-btn">
-                Search
-              </button>
-            </form>
 
             <button onClick={handleLogout} className="navx-logout-btn">
               Logout
