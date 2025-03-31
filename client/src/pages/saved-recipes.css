@@ -1,0 +1,83 @@
+/* Main container for saved recipes */
+.saved-recipes-container {
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+/* Heading for Saved Recipes section */
+.saved-recipes-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Grid layout for saved recipes */
+.saved-recipes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each individual saved recipe card */
+.saved-recipe-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.saved-recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Recipe title section */
+.saved-recipe-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Instructions text */
+.saved-recipe-instructions {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Image inside the saved recipe card */
+.saved-recipe-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Cooking time text */
+.saved-recipe-time {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .saved-recipes-container {
+    padding: 0 10px;
+  }
+
+  .saved-recipe-card {
+    padding: 15px;
+  }
+
+  .saved-recipes-heading {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,102 @@
+/* Create Recipe Form Styles */
+.crf-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box; /* Ensure padding is within max-width */
+}
+
+.crf-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.crf-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.crf-form label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+.crf-form input,
+.crf-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+}
+
+.crf-form textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.crf-ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.crf-add-btn {
+  margin-top: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.crf-add-btn:hover {
+  background: #218838;
+}
+
+.crf-submit-btn {
+  margin-top: 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.crf-submit-btn:hover {
+  background: #0056b3;
+}
+
+/* Ensure the page doesn't overflow */
+body {
+  padding-top: 100px; /* Ensure content is not hidden under navbar */
+}
+
+@media (max-width: 768px) {
+  .crf-container {
+    padding: 15px;
+  }
+  .crf-form input,
+  .crf-form textarea {
+    font-size: 14px;
+  }
+  .crf-submit-btn,
+  .crf-add-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+}

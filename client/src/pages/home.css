@@ -1,3 +1,105 @@
-.headhm1{
-    color: red;
+/* Main container for recipes */
+.recipes-container {
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.recipe-link {
+  text-decoration: none; /* Removes underline */
+  color: inherit; /* Inherits text color from parent */
+  display: block; /* Makes the whole area clickable */
+}
+
+.recipe-link:hover {
+  color: inherit; /* Prevents color change on hover */
+}
+
+/* Heading for the Recipes section */
+.recipes-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* List of recipe cards */
+.recipes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each individual recipe card */
+.recipe-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Header section of each card */
+.recipe-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Save button inside the card */
+.save-btn {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Instructions section inside each card */
+.recipe-instructions {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Image inside the recipe card */
+.recipe-image {
+  width: 100%;
+  height: 50vh;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Cooking time text */
+.cooking-time {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .recipes-container {
+    padding: 0 10px;
+  }
+
+  .recipe-card {
+    padding: 15px;
+  }
+
+  .recipes-heading {
+    font-size: 1.5rem;
+  }
 }

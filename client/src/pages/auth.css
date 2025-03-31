@@ -1,0 +1,149 @@
+/* Auth Container */
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-top: 30px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Toggle Buttons for Sign In/Sign Up - Horizontal switch design */
+.auth-toggle-btns {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 30px;
+  background-color: #f1f1f1;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-toggle-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff;
+  background-color: transparent;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.auth-toggle-btn.active {
+  background-color: #007bff;
+  color: white;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* "Sign In" or "Sign Up" Button Inactive Styling */
+.auth-toggle-btn:not(.active) {
+  color: #555;
+  background-color: #f1f1f1;
+}
+
+/* Form Container (Sign In / Sign Up Forms) */
+.auth-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive Styling */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 20px;
+  }
+  .auth-toggle-btns {
+    flex-direction: column;
+  }
+  .auth-toggle-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Container for the form */
+.auth2-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Form Heading */
+.auth2-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Group - Container for input elements */
+.auth2-form-group {
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+.auth2-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Input field styling */
+.auth2-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Focus effect for input fields */
+.auth2-input:focus {
+  border-color: #007bff;
+}
+
+/* Submit Button styling */
+.auth2-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button Hover effect */
+.auth2-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .auth2-container {
+    padding: 15px;
+  }
+}
