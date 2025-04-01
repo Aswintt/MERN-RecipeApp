@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "dev": "node --watch --env-file .env src/index.js",
     "start": "node src/index.js"
   },
   "dependencies": {

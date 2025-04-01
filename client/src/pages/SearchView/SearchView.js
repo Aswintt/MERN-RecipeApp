@@ -8,6 +8,9 @@ const SearchView = () => {
   const { query } = useParams();
   const [recipes, setRecipes] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -15,8 +18,11 @@ const SearchView = () => {
           `${process.env.REACT_APP_SERVER_URL}/recipes/search/${query}`
         );
         setRecipes(response.data);
-      } catch (error) {
-        console.error("Error fetching search results", error);
+      } catch (err) {
+        // console.error("Error fetching recipes:", err);
+        setError("Failed to fetch recipes. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchRecipes();
@@ -25,9 +31,15 @@ const SearchView = () => {
   return (
     <div className="search-results-container">
       <h1 className="search-heading">Search Results for "{query}"</h1>
-      <ul className="search-results-list">
-        {recipes.length > 0 ? (
-          recipes.map((recipe) => (
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <h2>{error}</h2>
+      ) : recipes.length === 0 ? (
+        <h2>Recipes not found!</h2>
+      ) : (
+        <ul className="search-results-list">
+          {recipes.map((recipe) => (
             <li key={recipe._id} className="search-recipe-card">
               <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
                 <h2>{recipe.name}</h2>
@@ -39,11 +51,9 @@ const SearchView = () => {
                 <p>Cooking Time: {recipe.cookingTime} minutes</p>
               </Link>
             </li>
-          ))
-        ) : (
-          <p>No recipes found.</p>
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

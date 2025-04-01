@@ -10,15 +10,23 @@ export const Home = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [cookies] = useCookies(["access_token"]);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const userID = useGetUserID();
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/recipes`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/recipes`
+        );
         setRecipes(response.data);
       } catch (err) {
-        console.log(err);
+        // console.error("Error fetching recipes:", err);
+        setError("Failed to fetch recipes. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -59,12 +67,20 @@ export const Home = () => {
   return (
     <div className="recipes-container">
       <h1 className="recipes-heading">Recipes</h1>
-      <ul className="recipes-list">
-        {recipes.map((recipe) => (
-          <li key={recipe._id} id={recipe._id} className="recipe-card">
-            <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <h2>{error}</h2>
+      ) : recipes.length === 0 ? (
+        <h2>Recipes not found!</h2>
+      ) : (
+        <ul className="recipes-list">
+          {recipes.map((recipe) => (
+            <li key={recipe._id} id={recipe._id} className="recipe-card">
               <div className="recipe-card-header">
-                <h2>{recipe.name}</h2>
+                <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+                  <h2>{recipe.name}</h2>
+                </Link>
                 <button
                   onClick={() => saveRecipe(recipe._id)}
                   disabled={isRecipeSaved(recipe._id)}
@@ -76,18 +92,20 @@ export const Home = () => {
               <div className="recipe-instructions">
                 <p>{recipe.instructions}</p>
               </div>
-              <img
-                src={recipe.imageUrl}
-                alt={recipe.name}
-                className="recipe-image"
-              />
+              <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+                <img
+                  src={recipe.imageUrl}
+                  alt={recipe.name}
+                  className="recipe-image"
+                />
+              </Link>
               <p className="cooking-time">
                 Cooking Time: {recipe.cookingTime} minutes
               </p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

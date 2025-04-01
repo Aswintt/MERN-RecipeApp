@@ -71,6 +71,7 @@ const Navbar = () => {
         >
           Create Recipe
         </Link>
+
         <form onSubmit={handleSearch} className="navx-search">
           <input
             type="text"
@@ -83,6 +84,7 @@ const Navbar = () => {
             Search
           </button>
         </form>
+
         {!cookies.access_token ? (
           <Link
             to="/auth"

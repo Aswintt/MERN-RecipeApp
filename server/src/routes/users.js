@@ -1,57 +1,61 @@
-import express from 'express'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import { UserModel } from "../models/Users.js"
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { UserModel } from "../models/Users.js";
 
-const router = express.Router()
+const router = express.Router();
 
 router.post("/register", async (req, res) => {
-    console.log("Request Body:", req.body);
+  console.log("Request Body:", req.body);
 
-    const { username, password } = req.body;
+  const { username, password } = req.body;
 
-    const user = await UserModel.findOne({ username });
-    if(user){
-        return res.json({ message: "User Already exists!" });
-    }
+  const user = await UserModel.findOne({ username });
+  if (user) {
+    return res.json({ message: "User Already exists!" });
+  }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new UserModel({username , password: hashedPassword});
+  const newUser = new UserModel({ username, password: hashedPassword });
 
-    await newUser.save();
-    res.json({ message: "User Registered successfully!" });
+  await newUser.save();
+  res.json({ message: "User Registered successfully!" });
 });
 
 router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-    const user = await UserModel.findOne({ username });
+  const { username, password } = req.body;
+  const user = await UserModel.findOne({ username });
 
-    if(!user){
-        return res.json({ message: "User doesn't Exist"});
-    }
+  if (!user) {
+    return res.json({ message: "User doesn't Exist" });
+  }
 
-    const isPasswordVaild = await bcrypt.compare(password, user.password);
+  // ✅ Check if the user is banned
+  if (user.isBanned) {
+    return res.json({ message: "You are banned from logging in." });
+  }
 
-    if(!isPasswordVaild){
-        return res.json({ message: "Username or Password is Incorrect! "});
-    }
+  const isPasswordVaild = await bcrypt.compare(password, user.password);
 
-    const token = jwt.sign({id: user._id}, "secret");
-    res.json({ token, userID: user._id, verify: "verify" });
+  if (!isPasswordVaild) {
+    return res.json({ message: "Username or Password is Incorrect! " });
+  }
+
+  const token = jwt.sign({ id: user._id }, "secret");
+  res.json({ token, userID: user._id, verify: "verify" });
 });
 
-
-export {router as userRouter };
+export { router as userRouter };
 
 export const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization;
-    if(token) {
-        jwt.verify(token, "secret", (err) => {
-            if (err) return res.sendStatus(403);
-            next();
-        });
-    } else {
-        res.sendStatus(401);
-    }
-}
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, "secret", (err) => {
+      if (err) return res.sendStatus(403);
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};

@@ -8,6 +8,9 @@ export const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const hasFetched = useRef(false); // Ref to track fetch status -smr
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const userID = useGetUserID();
 
   useEffect(() => {
@@ -20,7 +23,10 @@ export const SavedRecipes = () => {
         setSavedRecipes(response.data.savedRecipes);
         // console.log(response.data);
       } catch (err) {
-        console.error(err);
+        // console.error("Error fetching recipes:", err);
+        setError("Failed to fetch recipes. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -35,28 +41,38 @@ export const SavedRecipes = () => {
   return (
     <div className="saved-recipes-container">
       <h1 className="saved-recipes-heading">Saved Recipes</h1>
-      <ul className="saved-recipes-list">
-        {savedRecipes.map((recipe) => (
-          <li key={recipe._id} className="saved-recipe-card">
-            <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : error ? (
+        <h2>{error}</h2>
+      ) : savedRecipes.length === 0 ? (
+        <h2>Recipes not found!</h2>
+      ) : (
+        <ul className="saved-recipes-list">
+          {savedRecipes.map((recipe) => (
+            <li key={recipe._id} className="saved-recipe-card">
               <div className="saved-recipe-title">
-                <h2>{recipe.name}</h2>
+                <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+                  <h2>{recipe.name}</h2>
+                </Link>
               </div>
               <div className="saved-recipe-instructions">
                 <p>{recipe.instructions}</p>
               </div>
-              <img
-                src={recipe.imageUrl}
-                alt={recipe.name}
-                className="saved-recipe-image"
-              />
+              <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
+                <img
+                  src={recipe.imageUrl}
+                  alt={recipe.name}
+                  className="saved-recipe-image"
+                />
+              </Link>
               <p className="saved-recipe-time">
                 Cooking Time: {recipe.cookingTime} minutes
               </p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

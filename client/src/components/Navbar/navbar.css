@@ -162,3 +162,61 @@
     display: flex;
   }
 }
+
+/* Search bar container */
+.navx-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Search input field */
+.navx-search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.navx-search-input:focus {
+  border-color: #007bff;
+}
+
+/* Search button */
+.navx-search-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.navx-search-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navx-search {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navx-search-input {
+    width: 70%;
+  }
+
+  .navx-search-btn {
+    padding: 8px 12px;
+  }
+}

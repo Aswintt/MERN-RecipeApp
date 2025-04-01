@@ -43,7 +43,7 @@ export const Auth = () => {
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
   const [, setCookies] = useCookies(["access_token"]);
   console.log(setCookies);
   const navigate = useNavigate();
@@ -55,10 +55,19 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/auth/login`,
+        {
+          username,
+          password,
+        }
+      );
+
+      if (response.data.message) {
+        setError(response.data.message); // ✅ Show error message from backend
+        return;
+      }
+
       if (response.data.verify === "verify") {
         console.log("User logged");
         setCookies("access_token", response.data.token);
@@ -79,6 +88,7 @@ const Login = () => {
       setPassword={setPassword}
       label="Login"
       onSubmit={onSubmit}
+      error={error}
     />
   );
 };
@@ -122,6 +132,7 @@ const Form = ({
   setPassword,
   label,
   onSubmit,
+  error,
 }) => {
   return (
     <div className="auth2-container">
@@ -159,6 +170,7 @@ const Form = ({
           {label}{" "}
         </button>
       </form>
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };
