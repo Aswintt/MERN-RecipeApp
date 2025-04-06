@@ -7,6 +7,32 @@ const Posts = () => {
   const [page, setPage] = useState(1);
   const lastPostRef = useRef();
 
+  // Fetch posts
+  const fetchPosts = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/admin/posts?page=${page}`
+      );
+
+      // If no data, stop further fetches
+      if (data.length === 0) return;
+
+      setPosts((prevPosts) => [
+        ...prevPosts,
+        ...data.filter(
+          (newPost) => !prevPosts.some((post) => post._id === newPost._id)
+        ),
+      ]);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Lazy loading with IntersectionObserver
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,31 +53,6 @@ const Posts = () => {
 
   // Load posts when page changes
   useEffect(() => {
-    // Fetch posts
-    const fetchPosts = async () => {
-      if (loading) return;
-      setLoading(true);
-
-      try {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/admin/posts?page=${page}`
-        );
-
-        // If no data, stop further fetches
-        if (data.length === 0) return;
-
-        setPosts((prevPosts) => [
-          ...prevPosts,
-          ...data.filter(
-            (newPost) => !prevPosts.some((post) => post._id === newPost._id)
-          ),
-        ]);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchPosts();
   }, [page]);
 
