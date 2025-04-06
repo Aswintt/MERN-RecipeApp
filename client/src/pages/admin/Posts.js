@@ -54,7 +54,7 @@ const Posts = () => {
   // Load posts when page changes
   useEffect(() => {
     fetchPosts();
-  }, [page]);
+  }, [page, fetchPosts]);
 
   // Handle delete post
   const handleDelete = async (postId) => {
