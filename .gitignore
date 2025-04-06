@@ -1,5 +1,6 @@
 # Ignore node_modules folders
 **/node_modules/
+**/build/
 
 # Ignore the api folder
 api/
@@ -7,4 +8,5 @@ api/
 # Optional: Ignore logs and environment files
 *.log
 *.env
-client/src/pages/txt.txt
+*.firebaserc
+client/firebase.json
