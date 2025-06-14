@@ -56,3 +56,28 @@
     font-size: 0.95rem;
   }
 }
+
+.tag-container {
+  display: flex;
+  padding: 0 150px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.tag-badge {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.tag-badge:hover {
+  background-color: #e0e0e0;
+}

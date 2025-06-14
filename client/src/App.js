@@ -13,24 +13,40 @@ import AdminLogin from "./pages/admin/AdminLogin.js";
 import ErrorPage from "./pages/Error/ErrorPage.js";
 import AdminProtectedRoute from "./pages/admin/AdminProtectedRoute.js";
 import AdminDashboard from "./pages/admin/AdminDashboard.js";
+import { useHasJwtCookie } from "./hooks/useGetUserID.js";
+import { Navigate } from "react-router-dom";
 function App() {
+  const hasJwt = useHasJwtCookie();
+  // console.log(hasJwt);
   return (
     <div className="App">
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route
+            path="/"
+            element={!hasJwt ? <Landing /> : <Navigate to={"/recipes"} />}
+          />
           <Route path="/recipes" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route
+            path="/auth"
+            element={!hasJwt ? <Auth /> : <Navigate to={"/recipes"} />}
+          />
           <Route path="/admin" element={<AdminLogin />} />
           {/* ✅ Protected Admin Routes */}
           <Route element={<AdminProtectedRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
-          <Route path="/create-recipe" element={<CreateRecipe />} />
+          <Route
+            path="/create-recipe"
+            element={hasJwt ? <CreateRecipe /> : <Navigate to={"/recipes"} />}
+          />
           <Route path="/recipe/:slug" element={<DetailView />} />
           <Route path="/search/:query" element={<SearchView />} />
-          <Route path="/saved-recipes" element={<SavedRecipes />} />
+          <Route
+            path="/saved-recipes"
+            element={hasJwt ? <SavedRecipes /> : <Navigate to={"/recipes"} />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>

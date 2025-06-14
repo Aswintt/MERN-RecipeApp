@@ -5,6 +5,23 @@ import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
 
+router.get("/me/:id", async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    console.log("userID:", userID);
+
+    const user = await UserModel.findById(userID).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.post("/register", async (req, res) => {
   console.log("Request Body:", req.body);
 

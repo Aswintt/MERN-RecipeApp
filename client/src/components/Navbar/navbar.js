@@ -3,9 +3,10 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./navbar.css";
+import { useHasJwtCookie } from "../../hooks/useGetUserID";
 
 const Navbar = () => {
-  const [cookies, setCookies] = useCookies(["access_token"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,6 +14,7 @@ const Navbar = () => {
   const handleLogout = () => {
     setCookies("access_token", "");
     localStorage.removeItem("userID");
+    removeCookie("access_token", { path: "/" });
     navigate("/auth");
   };
 
@@ -39,6 +41,7 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const hasJwt = useHasJwtCookie();
   return (
     <nav className="navx-navbar">
       <Link to="/" className="recipe-link">
@@ -64,13 +67,16 @@ const Navbar = () => {
         >
           Recipes
         </Link>
-        <Link
-          to="/create-recipe"
-          className="navx-link"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          Create Recipe
-        </Link>
+
+        {hasJwt && (
+          <Link
+            to="/create-recipe"
+            className="navx-link"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Create Recipe
+          </Link>
+        )}
 
         <form onSubmit={handleSearch} className="navx-search">
           <input

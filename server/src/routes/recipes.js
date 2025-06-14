@@ -37,6 +37,26 @@ router.put("/", verifyToken, async (req, res) => {
   }
 });
 
+router.put("/unsave-recipe", verifyToken, async (req, res) => {
+  const userId = req.body.userID;
+  const recipeId = req.body.recipeId;
+
+  if (!recipeId && !userId) {
+    return res
+      .status(400)
+      .json({ message: "Recipe ID and User ID is required." });
+  }
+
+  try {
+    await UserModel.findByIdAndUpdate(userId, {
+      $pull: { savedRecipes: recipeId },
+    });
+    res.status(200).json({ message: "Recipe unsaved successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Server error while unsaving recipe." });
+  }
+});
+
 router.get("/savedRecipes/ids/:userID", async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID);
@@ -61,7 +81,12 @@ router.get("/savedRecipes/:userID", async (req, res) => {
 // Get a recipe by slug
 router.get("/:slug", async (req, res) => {
   try {
-    const recipe = await RecipesModel.findOne({ slug: req.params.slug });
+    const recipe = await RecipesModel.findOne({
+      slug: req.params.slug,
+    }).populate({
+      path: "userOwner",
+      select: "-password",
+    });
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
     res.json(recipe);

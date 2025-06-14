@@ -151,3 +151,9 @@
 .error-message {
   color: red;
 }
+.adminstyl {
+  text-align: center;
+  color: gray;
+  text-decoration: none;
+  cursor: pointer;
+}

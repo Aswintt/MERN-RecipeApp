@@ -83,7 +83,7 @@
 
 /* Ensure the page doesn't overflow */
 body {
-  padding-top: 100px; /* Ensure content is not hidden under navbar */
+  padding-top: 85px; /* Ensure content is not hidden under navbar */
 }
 
 @media (max-width: 768px) {

@@ -65,8 +65,8 @@ export const Home = () => {
   const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
-    <div className="recipes-container">
-      <h1 className="recipes-heading">Recipes</h1>
+    <div className="homefeed-container">
+      <h1 className="homefeed-heading">Recipes</h1>
       {loading ? (
         <h2>Loading...</h2>
       ) : error ? (
@@ -74,37 +74,43 @@ export const Home = () => {
       ) : recipes.length === 0 ? (
         <h2>Recipes not found!</h2>
       ) : (
-        <ul className="recipes-list">
+        <div className="homefeed-grid">
           {recipes.map((recipe) => (
-            <li key={recipe._id} id={recipe._id} className="recipe-card">
-              <div className="recipe-card-header">
-                <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
-                  <h2>{recipe.name}</h2>
-                </Link>
-                <button
-                  onClick={() => saveRecipe(recipe._id)}
-                  disabled={isRecipeSaved(recipe._id)}
-                  className="save-btn"
-                >
-                  {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-                </button>
-              </div>
-              <div className="recipe-instructions">
-                <p>{recipe.instructions}</p>
-              </div>
-              <Link to={`/recipe/${recipe.slug}`} className="recipe-link">
-                <img
-                  src={recipe.imageUrl}
-                  alt={recipe.name}
-                  className="recipe-image"
-                />
+            <div key={recipe._id} className="homefeed-card">
+              <Link
+                to={`/recipe/${recipe.slug}`}
+                className="homefeed-title-link"
+              >
+                <h2>{recipe.name}</h2>
               </Link>
-              <p className="cooking-time">
+
+              <button
+                onClick={() => saveRecipe(recipe._id)}
+                disabled={isRecipeSaved(recipe._id)}
+                className="homefeed-save-btn"
+              >
+                {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+              </button>
+
+              <Link
+                to={`/recipe/${recipe.slug}`}
+                className="homefeed-image-link"
+              >
+                <div className="homefeed-image-wrapper">
+                  <img
+                    src={recipe.imageUrl}
+                    alt={recipe.name}
+                    className="homefeed-image"
+                  />
+                </div>
+              </Link>
+
+              <p className="homefeed-cooking-time">
                 Cooking Time: {recipe.cookingTime} minutes
               </p>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

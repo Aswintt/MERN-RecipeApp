@@ -2,7 +2,7 @@ import "./auth.css";
 import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true); // State to toggle between Login and Register
@@ -35,6 +35,11 @@ export const Auth = () => {
 
       <div className="auth-form-container">
         {isLogin ? <Login /> : <Register />}
+      </div>
+      <div className="adminstyl">
+        <Link className="adminstyl" to={"/admin"}>
+          Admin?
+        </Link>
       </div>
     </div>
   );

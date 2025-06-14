@@ -88,13 +88,21 @@ router.delete("/users/:id", async (req, res) => {
 });
 
 // ✅ Get Paginated Posts (3 per page for lazy loading)
+// router.get("/posts", async (req, res) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = 3;
+//     const posts = await RecipesModel.find({})
+//       .skip((page - 1) * limit)
+//       .limit(limit);
+//     res.json(posts);
+//   } catch (err) {
+//     res.status(500).json({ error: "Error fetching posts" });
+//   }
+// });
 router.get("/posts", async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 3;
-    const posts = await RecipesModel.find({})
-      .skip((page - 1) * limit)
-      .limit(limit);
+    const posts = await RecipesModel.find({});
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: "Error fetching posts" });

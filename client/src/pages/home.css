@@ -1,105 +1,99 @@
-/* Main container for recipes */
-.recipes-container {
-  padding: 0 20px;
+.homefeed-container {
+  padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
-  cursor: pointer;
-}
-.recipe-link {
-  text-decoration: none; /* Removes underline */
-  color: inherit; /* Inherits text color from parent */
-  display: block; /* Makes the whole area clickable */
 }
 
-.recipe-link:hover {
-  color: inherit; /* Prevents color change on hover */
-}
-
-/* Heading for the Recipes section */
-.recipes-heading {
-  text-align: center;
+.homefeed-heading {
   font-size: 2rem;
   margin-bottom: 20px;
-  font-weight: bold;
+  text-align: center;
+  color: #333;
 }
 
-/* List of recipe cards */
-.recipes-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Each individual recipe card */
-.recipe-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-}
-
-.recipe-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Header section of each card */
-.recipe-card-header {
+.homefeed-grid {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-/* Save button inside the card */
-.save-btn {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
+.homefeed-card {
+  width: 320px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.homefeed-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.homefeed-title-link h2 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+
+.homefeed-save-btn {
+  align-self: flex-end;
+  background-color: #2ecc71;
+  color: white;
   border: none;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 8px;
+  transition: background-color 0.2s;
 }
 
-.save-btn:disabled {
-  background-color: #ddd;
+.homefeed-save-btn:disabled {
+  background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
-/* Instructions section inside each card */
-.recipe-instructions {
-  font-size: 14px;
-  margin-bottom: 10px;
+.homefeed-save-btn:hover:not(:disabled) {
+  background-color: #27ae60;
 }
 
-/* Image inside the recipe card */
-.recipe-image {
+.homefeed-image-wrapper {
   width: 100%;
-  height: 50vh;
+  height: 180px;
+  overflow: hidden;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-/* Cooking time text */
-.cooking-time {
-  font-size: 14px;
-  color: #555;
+.homefeed-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .recipes-container {
-    padding: 0 10px;
-  }
+.homefeed-cooking-time {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: auto;
+}
 
-  .recipe-card {
-    padding: 15px;
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .homefeed-card {
+    width: 48%;
   }
+}
 
-  .recipes-heading {
-    font-size: 1.5rem;
+@media (max-width: 600px) {
+  .homefeed-card {
+    width: 100%;
   }
 }
