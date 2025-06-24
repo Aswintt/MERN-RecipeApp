@@ -157,3 +157,33 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Wrapper around password input and toggle button */
+.auth2-password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Adjusted input padding to avoid text overlapping the toggle */
+.auth2-password-wrapper .auth2-input {
+  padding-right: 60px; /* space for left-aligned toggle button */
+}
+
+/* Show/Hide toggle button inside input, floated left */
+.toggle-password-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #007bff;
+  z-index: 2;
+  padding: 0;
+}
+
+.hideMail {
+  visibility: hidden;
+}

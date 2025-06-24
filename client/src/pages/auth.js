@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true); // State to toggle between Login and Register
-
+  const [showPassword, setShowPassword] = useState(false);
   const toggleForm = (formType) => {
     if (
       (formType === "login" && isLogin) ||
@@ -49,6 +49,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [, setCookies] = useCookies(["access_token"]);
   console.log(setCookies);
   const navigate = useNavigate();
@@ -94,22 +96,45 @@ const Login = () => {
       label="Login"
       onSubmit={onSubmit}
       error={error}
+      showPassword={showPassword}
+      setShowPassword={setShowPassword}
+      hide="hideMail"
     />
   );
 };
 
 const Register = () => {
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   // getting api for register
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (!username.trim() || !password.trim()) {
-      alert("Please fill out all fields!");
+    const trimmedEmail = email.trim();
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
+    if (!trimmedEmail || !trimmedUsername || !trimmedPassword) {
+      setError("Please fill out all fields!");
       return;
     }
+    // Validation checks
+    if (trimmedUsername.length < 5) {
+      setError("Username must be at least 5 characters long.");
+      return;
+    }
+
+    if (trimmedPassword.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    // If all validations pass
+    setError("");
     try {
       await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
+        email,
         username,
         password,
       });
@@ -126,6 +151,11 @@ const Register = () => {
       setPassword={setPassword}
       label="Register"
       onSubmit={onSubmit}
+      showPassword={showPassword}
+      setShowPassword={setShowPassword}
+      error={error}
+      email={email}
+      setEmail={setEmail}
     />
   );
 };
@@ -138,11 +168,28 @@ const Form = ({
   label,
   onSubmit,
   error,
+  showPassword,
+  setShowPassword,
+  email,
+  setEmail,
+  hide,
 }) => {
   return (
     <div className="auth2-container">
       <form onSubmit={onSubmit} className="auth2-form">
         <h2 className="auth2-heading"> {label} </h2>
+        <div className={`auth2-form-group ${hide}`}>
+          <label htmlFor="email" className="auth2-label">
+            Email:
+          </label>
+          <input
+            type="text"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className="auth2-input"
+          />
+        </div>
         <div className="auth2-form-group">
           <label htmlFor="username" className="auth2-label">
             Username:
@@ -160,14 +207,23 @@ const Form = ({
           <label htmlFor="password" className="auth2-label">
             Password:
           </label>
-          <input
-            type="text"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="auth2-input"
-            required
-          />
+          <div className="auth2-password-wrapper">
+            <button
+              type="button"
+              className="toggle-password-btn"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className="auth2-input"
+              required
+            />
+          </div>
         </div>
 
         <button type="submit" className="auth2-btn">
@@ -175,6 +231,7 @@ const Form = ({
           {label}{" "}
         </button>
       </form>
+      <Link to={"/forgot-password"}>Forgot Password?</Link>
       {error && <div className="error-message">{error}</div>}
     </div>
   );

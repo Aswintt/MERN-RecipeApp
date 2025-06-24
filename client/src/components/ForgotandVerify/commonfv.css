@@ -1,0 +1,137 @@
+.fv-container {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.fv-card {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.fv-card h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #111827;
+}
+
+.fv-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.fv-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+/* Spinner */
+.fv-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top: 2px solid #3f51b5;
+  border-radius: 50%;
+  animation: fv-spin 0.8s linear infinite;
+}
+
+@keyframes fv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fv-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.fv-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Show/hide logic */
+.fv-hidden {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.fv-visible {
+  opacity: 1;
+  visibility: visible;
+  position: static;
+}
+
+/* Toggle password visibility */
+.fv-password-field {
+  position: relative;
+}
+
+.fv-password-field input {
+  padding-right: 5rem;
+}
+
+.fv-toggle-btn {
+  text-decoration: none;
+  position: absolute;
+  right: 0.5rem;
+  top: 35%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Message styling */
+.fv-message {
+  margin-top: 1rem;
+  text-align: center;
+  color: green;
+}
+
+.fv-error {
+  margin-top: 1rem;
+  text-align: center;
+  color: red;
+}
+
+/* Responsive tweaks */
+@media (max-width: 500px) {
+  .fv-card {
+    padding: 1.5rem;
+  }
+
+  .fv-input,
+  .fv-button {
+    font-size: 0.95rem;
+  }
+}
