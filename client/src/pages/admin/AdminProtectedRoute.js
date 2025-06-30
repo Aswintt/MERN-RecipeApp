@@ -1,17 +1,17 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const AdminProtectedRoute = () => {
-  const adminToken = localStorage.getItem("adminToken");
   const location = useLocation();
+  const adminToken = localStorage.getItem("adminToken");
 
-  // 🔍 Debug: Check if token exists
-  console.log("Admin Token from localStorage:", adminToken);
-  console.log("Current Location:", location.pathname);
+  // Allow access to login route
+  if (location.pathname === "/admin") {
+    return <Outlet />;
+  }
 
-  // ✅ If no token, restrict access and redirect to login
-  if (!adminToken && location.pathname !== "/admin") {
-    console.log("🚫 No token found. Redirecting to login...");
-    return <Navigate to="/admin" replace />;
+  // Block access to protected routes if no token
+  if (!adminToken) {
+    return <Navigate to="/admin" replace state={{ from: location }} />;
   }
 
   return <Outlet />;

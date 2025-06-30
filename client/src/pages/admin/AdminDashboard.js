@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import Users from "./Users";
-import Posts from "./Posts";
-import "./admin.css";
+import Users from "./Users/Users.js";
+import Posts from "./Posts/Posts.js";
+import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
-  const [selectedTab, setSelectedTab] = useState("users");
+  const [tab, setTab] = useState("users");
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,11 +15,11 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="admin-dashboard">
-      <Sidebar setSelectedTab={setSelectedTab} handleLogout={handleLogout} />
-      <div className="admin-content">
-        {selectedTab === "users" ? <Users /> : <Posts />}
-      </div>
+    <div className="admin-layout">
+      <Sidebar setTab={setTab} handleLogout={handleLogout} />
+      <main className="admin-main">
+        {tab === "users" ? <Users /> : <Posts />}
+      </main>
     </div>
   );
 };

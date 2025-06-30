@@ -14,6 +14,15 @@ const RecipesSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
+  reports: {
+    type: [
+      {
+        message: String,
+        reportedAt: { type: Date, default: Date.now },
+      },
+    ],
+    default: [],
+  },
 });
 
 // Middleware to generate a slug before saving a new recipe

@@ -107,3 +107,16 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: "Failed to delete post" });
   }
 };
+
+export const clearReports = async (req, res) => {
+  try {
+    const updated = await RecipesModel.findByIdAndUpdate(
+      req.params.id,
+      { reports: [] },
+      { new: true }
+    );
+    res.json({ success: true, updated });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};

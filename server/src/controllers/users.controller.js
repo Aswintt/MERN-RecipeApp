@@ -6,10 +6,10 @@ import { UserModel } from "../models/users.model.js";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 const fdUrl = process.env.FD_URL || "https://recipefinderz.web.app";
 
-export const getMe = () => async (req, res) => {
+export const getMe = async (req, res) => {
   try {
     const userID = req.params.userID;
-    console.log("userID:", userID);
+    // console.log("userID:", userID);
 
     const user = await UserModel.findById(userID).select("-password");
     if (!user) {
@@ -23,8 +23,8 @@ export const getMe = () => async (req, res) => {
   }
 };
 
-export const userRegister = () => async (req, res) => {
-  console.log("Request Body:", req.body);
+export const userRegister = async (req, res) => {
+  // console.log("Request Body:", req.body);
 
   const { username, email, password } = req.body;
 
@@ -44,7 +44,7 @@ export const userRegister = () => async (req, res) => {
   res.json({ message: "User Registered successfully!" });
 };
 
-export const userLogin = () => async (req, res) => {
+export const userLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await UserModel.findOne({ username });
 
@@ -67,7 +67,7 @@ export const userLogin = () => async (req, res) => {
   res.json({ token, userID: user._id, verify: "verify" });
 };
 
-export const forgotPassword = () => async (req, res) => {
+export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
     const user = await UserModel.findOne({ email });
@@ -86,7 +86,7 @@ export const forgotPassword = () => async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: email,
-      subject: "Password Reset",
+      subject: "Password Reset - Recipe Finder",
       html: `<p>Click <a href="${resetLink}">here</a> to reset your password. Link expires in 5 minutes.</p>`,
     });
 
@@ -97,7 +97,7 @@ export const forgotPassword = () => async (req, res) => {
   }
 };
 
-export const resetPassword = () => async (req, res) => {
+export const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
 

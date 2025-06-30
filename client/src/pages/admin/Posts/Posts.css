@@ -1,0 +1,146 @@
+.admin-posts-wrapper {
+  padding: 2rem;
+  width: 100%;
+}
+
+.admin-posts-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.admin-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-post-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.admin-post-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.admin-post-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.admin-post-delete-btn,
+.admin-post-view-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-post-delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.admin-post-delete-btn:hover {
+  background: #c0392b;
+}
+
+.admin-post-view-btn {
+  background: #2b6cc0;
+  color: white;
+}
+
+.admin-post-view-btn:hover {
+  background: #1f4ca6;
+}
+
+.admin-post-report-icon-wrapper {
+  position: relative;
+}
+
+.admin-post-report-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.admin-post-report-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #3498db;
+  color: white;
+  font-size: 0.65rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+.admin-report-popup {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  padding: 0.5rem;
+}
+
+.admin-report-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.admin-report-close-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.admin-report-popup-body {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.admin-report-item {
+  background: #f7f7f7;
+  padding: 0.3rem;
+  margin-bottom: 0.4rem;
+  border-radius: 5px;
+}
+
+.admin-popup-icons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-clear-reports-btn {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #c0392b;
+}

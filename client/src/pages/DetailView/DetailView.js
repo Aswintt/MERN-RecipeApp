@@ -10,6 +10,8 @@ const DetailView = () => {
   const [cookies] = useCookies(["access_token"]);
   const [recipe, setRecipe] = useState(null);
   // const [me, setMe] = useState([]);
+  const [showReportInput, setShowReportInput] = useState(false);
+  const [reportMessage, setReportMessage] = useState("");
 
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +58,21 @@ const DetailView = () => {
   };
   // console.log(savedRecipes);
 
+  const handleReport = async () => {
+    if (!reportMessage.trim()) return;
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/recipes/${recipe._id}/report`,
+        { message: reportMessage }
+      );
+      alert("Report submitted");
+      setShowReportInput(false);
+      setReportMessage("");
+    } catch (error) {
+      console.error("Report error:", error);
+    }
+  };
+
   if (loading) return <h2>Loading...</h2>;
   if (!recipe) return <h2>Recipe not found!</h2>;
 
@@ -91,6 +108,30 @@ const DetailView = () => {
             {item}
           </span>
         ))}
+      </div>
+      <div className="report-container">
+        {showReportInput && (
+          <input
+            className="report-input"
+            type="text"
+            value={reportMessage}
+            onChange={(e) => setReportMessage(e.target.value)}
+            placeholder="What's wrong with this recipe?"
+          />
+        )}
+        <div className="report-buttons">
+          {showReportInput && (
+            <button className="submit-report" onClick={handleReport}>
+              Report
+            </button>
+          )}
+          <button
+            className="toggle-report"
+            onClick={() => setShowReportInput((prev) => !prev)}
+          >
+            ⚠
+          </button>
+        </div>
       </div>
     </div>
   );

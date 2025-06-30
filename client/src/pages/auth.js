@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true); // State to toggle between Login and Register
-  const [showPassword, setShowPassword] = useState(false);
   const toggleForm = (formType) => {
     if (
       (formType === "login" && isLogin) ||
@@ -52,7 +51,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [, setCookies] = useCookies(["access_token"]);
-  console.log(setCookies);
+  // console.log(setCookies);
   const navigate = useNavigate();
 
   const onSubmit = async (event) => {

@@ -40,6 +40,46 @@
   color: #333;
   margin-top: 15px;
 }
+/* report start */
+.report-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.report-input {
+  border: 1px solid #ff4d4f;
+  border-radius: 4px;
+  padding: 6px 8px;
+  width: 100%;
+  margin-bottom: 8px;
+  background: #fff0f0;
+}
+
+.report-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toggle-report {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.submit-report {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* report end */
 
 /* Responsive Design */
 @media (max-width: 768px) {

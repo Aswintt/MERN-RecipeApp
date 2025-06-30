@@ -6,6 +6,7 @@ import {
   deleteUser,
   getAllPosts,
   deletePost,
+  clearReports,
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router.put("/users/:id/ban", userBanUnban); // Ban/Unban a User
 router.delete("/users/:id", deleteUser); // Delete a User
 router.delete("/posts/:id", deletePost); // Delete a Post
 router.get("/posts", getAllPosts); //Get All posts
+
+router.put("/posts/:id/clear-reports", clearReports);
 
 export { router as adminRouter };

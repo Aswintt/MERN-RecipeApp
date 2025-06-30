@@ -57,9 +57,7 @@ export const SavedRecipes = () => {
         }
       );
 
-      console.log("Recipe unsaved:", res.data.message);
-
-      // Optionally update UI here (like reloading savedRecipes)
+      // console.log("Recipe unsaved:", res.data.message);
     } catch (err) {
       console.error(
         "Error unsaving recipe:",

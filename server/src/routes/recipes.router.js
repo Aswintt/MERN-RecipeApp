@@ -8,6 +8,7 @@ import {
   unsaveRecipe,
   getSavedRecipes,
   checkIfSaved,
+  reportRecipe,
 } from "../controllers/recipes.controller.js";
 import { verifyToken } from "../middleware/protectRoute.js";
 
@@ -23,5 +24,7 @@ router.get("/savedRecipes/ids/:userID", checkIfSaved); // Check if that recipe i
 router.get("/savedRecipes/:userID", getSavedRecipes); // Get all saved recipies
 router.get("/:slug", getRecipeBySlug); // Get a recipe by slug
 router.get("/search/:query", searchRecipes); // Get recipes that match the search query
+
+router.post("/:id/report", reportRecipe);
 
 export { router as recipesRouter };

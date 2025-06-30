@@ -1,7 +1,7 @@
 import { UserModel } from "../models/users.model.js";
 import { RecipesModel } from "../models/recipes.model.js";
 
-export const getAllRecipes = () => async (req, res) => {
+export const getAllRecipes = async (req, res) => {
   try {
     const response = await RecipesModel.find({});
     res.json(response);
@@ -10,7 +10,7 @@ export const getAllRecipes = () => async (req, res) => {
   }
 };
 
-export const createRecipe = () => async (req, res) => {
+export const createRecipe = async (req, res) => {
   const recipe = new RecipesModel(req.body);
   try {
     const response = await recipe.save();
@@ -20,7 +20,7 @@ export const createRecipe = () => async (req, res) => {
   }
 };
 
-export const saveRecipe = () => async (req, res) => {
+export const saveRecipe = async (req, res) => {
   try {
     const recipe = await RecipesModel.findById(req.body.recipeID);
     const user = await UserModel.findById(req.body.userID);
@@ -32,7 +32,7 @@ export const saveRecipe = () => async (req, res) => {
   }
 };
 
-export const getSavedRecipes = () => async (req, res) => {
+export const getSavedRecipes = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID);
     const savedRecipes = await RecipesModel.find({
@@ -44,7 +44,7 @@ export const getSavedRecipes = () => async (req, res) => {
   }
 };
 
-export const unsaveRecipe = () => async (req, res) => {
+export const unsaveRecipe = async (req, res) => {
   const userId = req.body.userID;
   const recipeId = req.body.recipeId;
 
@@ -64,7 +64,7 @@ export const unsaveRecipe = () => async (req, res) => {
   }
 };
 
-export const checkIfSaved = () => async (req, res) => {
+export const checkIfSaved = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID);
     res.json({ savedRecipes: user?.savedRecipes });
@@ -73,7 +73,7 @@ export const checkIfSaved = () => async (req, res) => {
   }
 };
 
-export const getRecipeBySlug = () => async (req, res) => {
+export const getRecipeBySlug = async (req, res) => {
   try {
     const recipe = await RecipesModel.findOne({
       slug: req.params.slug,
@@ -89,7 +89,7 @@ export const getRecipeBySlug = () => async (req, res) => {
   }
 };
 
-export const searchRecipes = () => async (req, res) => {
+export const searchRecipes = async (req, res) => {
   try {
     const searchTerm = req.params.query;
     const recipes = await RecipesModel.find({
@@ -99,5 +99,22 @@ export const searchRecipes = () => async (req, res) => {
   } catch (error) {
     console.error("Error searching recipes:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const reportRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  // console.log(message);
+  if (!message)
+    return res.status(400).json({ error: "Report message is required" });
+
+  try {
+    const recipe = await RecipesModel.findById(id);
+    recipe.reports.push({ message });
+    await recipe.save();
+    res.json({ success: true, message: "Report submitted" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to report post" });
   }
 };
