@@ -59,11 +59,8 @@ export default function ForgotPassword() {
           disabled={loading}
           title="Send Reset Link"
         >
-          {loading ? (
-            <span className="fv-spinner"></span>
-          ) : (
-            <span>Send Reset Link</span>
-          )}
+          {loading && <span className="fv-spinner"></span>}
+          <span>Send Reset Link</span>
         </button>
 
         {message && <p className="fv-message">{message}</p>}

@@ -1,12 +1,9 @@
-import express from "express";
-import { UserModel } from "../models/Users.js";
-import { RecipesModel } from "../models/Recipes.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-const router = express.Router();
+import { UserModel } from "../models/users.model.js";
+import { RecipesModel } from "../models/recipes.model.js";
 
-// Admin Login Route
-router.post("/login", async (req, res) => {
+export const adminLogin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -50,10 +47,9 @@ router.post("/login", async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
   }
-});
+};
 
-// ✅ Get All Users (excluding admins)
-router.get("/users", async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await UserModel.find({ isAdmin: false }, "username isBanned"); // Exclude users with isAdmin: true
 
@@ -61,10 +57,18 @@ router.get("/users", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Error fetching users" });
   }
-});
+};
 
-// ✅ Ban/Unban a User
-router.put("/users/:id/ban", async (req, res) => {
+export const getAllPosts = async (req, res) => {
+  try {
+    const posts = await RecipesModel.find({});
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching posts" });
+  }
+};
+
+export const userBanUnban = async (req, res) => {
   try {
     const { isBanned } = req.body;
     await UserModel.findByIdAndUpdate(req.params.id, { isBanned });
@@ -75,41 +79,18 @@ router.put("/users/:id/ban", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Error updating user ban status" });
   }
-});
+};
 
-// ✅ Delete a User
-router.delete("/users/:id", async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     await UserModel.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: "User deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: "Error deleting user" });
   }
-});
+};
 
-// ✅ Get Paginated Posts (3 per page for lazy loading)
-// router.get("/posts", async (req, res) => {
-//   try {
-//     const page = parseInt(req.query.page) || 1;
-//     const limit = 3;
-//     const posts = await RecipesModel.find({})
-//       .skip((page - 1) * limit)
-//       .limit(limit);
-//     res.json(posts);
-//   } catch (err) {
-//     res.status(500).json({ error: "Error fetching posts" });
-//   }
-// });
-router.get("/posts", async (req, res) => {
-  try {
-    const posts = await RecipesModel.find({});
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ error: "Error fetching posts" });
-  }
-});
-
-router.delete("/posts/:id", async (req, res) => {
+export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -125,6 +106,4 @@ router.delete("/posts/:id", async (req, res) => {
     console.error("Error deleting post:", err);
     res.status(500).json({ message: "Failed to delete post" });
   }
-});
-
-export { router as adminRouter };
+};

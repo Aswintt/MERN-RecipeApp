@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 
-import { userRouter } from "./routes/users.js";
-import { recipesRouter } from "./routes/recipes.js";
-import { adminRouter } from "./routes/admin.js";
+import { userRouter } from "./routes/users.router.js";
+import { recipesRouter } from "./routes/recipes.router.js";
+import { adminRouter } from "./routes/admin.router.js";
 
 const app = express();
 const port = process.env.PORT || 8000;

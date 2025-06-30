@@ -12,7 +12,18 @@ export default function ResetPassword() {
   const navigate = useNavigate();
 
   const handleReset = async () => {
+    const trimmedPassword = password.trim();
+    const trimmedConfirmPassword = confirmPassword.trim();
+    if (!trimmedPassword || !trimmedConfirmPassword) {
+      setError("Please fill out all fields!");
+      return;
+    }
+    if (trimmedPassword.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
     if (password !== confirmPassword) {
+      setError("");
       setError("Passwords do not match");
       return;
     }
