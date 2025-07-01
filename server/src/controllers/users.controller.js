@@ -24,52 +24,73 @@ export const getMe = async (req, res) => {
 };
 
 export const userRegister = async (req, res) => {
-  // console.log("Request Body:", req.body);
-
   const { username, email, password } = req.body;
 
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    return res.json({ message: "User Already exists!" });
-  }
-  const usernameExists = await UserModel.findOne({ username });
-  if (usernameExists) {
-    return res.json({ message: "This username is Taken" });
-  }
-  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.json({ message: "User Already exists!" });
+    }
+    const usernameExists = await UserModel.findOne({ username });
+    if (usernameExists) {
+      return res.json({ message: "This username is Taken" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = new UserModel({ username, email, password: hashedPassword });
+    const newUser = new UserModel({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
-  await newUser.save();
-  res.json({ message: "User Registered successfully!" });
+    await newUser.save();
+    res.json({ message: "User Registered successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 export const userLogin = async (req, res) => {
   const { username, password } = req.body;
-  const user = await UserModel.findOne({ username });
+  try {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let useThis = {};
+    if (emailRegex.test(username)) {
+      // console.log("Valid email!");
+      useThis = { email: username };
+    } else {
+      useThis = { username };
+      // console.log("Valid Username!");
+    }
+    const user = await UserModel.findOne(useThis);
 
-  if (!user) {
-    return res.json({ message: "User doesn't Exist" });
+    if (!user) {
+      return res.json({ message: "User doesn't Exist" });
+    }
+
+    // ✅ Check if the user is banned
+    if (user.isBanned) {
+      return res.json({ message: "You are banned from logging in." });
+    }
+
+    const isPasswordVaild = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordVaild) {
+      return res.json({ message: "Username or Password is Incorrect! " });
+    }
+
+    const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "1d" });
+    res.json({
+      token,
+      userID: user._id,
+      userName: user.username,
+      verify: "verify",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
-
-  // ✅ Check if the user is banned
-  if (user.isBanned) {
-    return res.json({ message: "You are banned from logging in." });
-  }
-
-  const isPasswordVaild = await bcrypt.compare(password, user.password);
-
-  if (!isPasswordVaild) {
-    return res.json({ message: "Username or Password is Incorrect! " });
-  }
-
-  const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "1d" });
-  res.json({
-    token,
-    userID: user._id,
-    userName: user.username,
-    verify: "verify",
-  });
 };
 
 export const forgotPassword = async (req, res) => {
