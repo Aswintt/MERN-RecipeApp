@@ -78,6 +78,7 @@ const Login = () => {
         console.log("User logged");
         setCookies("access_token", response.data.token);
         window.localStorage.setItem("userID", response.data.userID);
+        window.localStorage.setItem("userName", response.data.userName);
         navigate("/");
       } else {
         console.log("invalid credentials");

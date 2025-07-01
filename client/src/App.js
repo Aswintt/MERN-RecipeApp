@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "./pages/home";
-import { Auth } from "./pages/auth";
-import { CreateRecipe } from "./pages/create-recipe";
-import { SavedRecipes } from "./pages/saved-recipes";
+import { Home } from "./pages/HomeRecipes/home.js";
+import { Auth } from "./pages/Auth/auth.js";
+import { CreateRecipe } from "./pages/CreateRecipe/create-recipe.js";
+import { SavedRecipes } from "./pages/SavedRecipes/saved-recipes.js";
 
 import Navbar from "./components/Navbar/navbar.js";
 import DetailView from "./pages/DetailView/DetailView.js";
@@ -13,6 +13,7 @@ import AdminLogin from "./pages/admin/Login/AdminLogin.js";
 import ErrorPage from "./pages/Error/ErrorPage.js";
 import AdminProtectedRoute from "./pages/admin/AdminProtectedRoute.js";
 import AdminDashboard from "./pages/admin/AdminDashboard.js";
+
 import { useHasJwtCookie } from "./hooks/useGetUserID.js";
 import { Navigate } from "react-router-dom";
 

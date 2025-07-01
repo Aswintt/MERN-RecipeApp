@@ -1,32 +1,28 @@
-/* Container for entire search view */
-.search-results-container {
+.search-page-wrapper {
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Heading above the results */
-.search-heading {
+.search-page-heading {
   font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
   color: #333;
 }
 
-/* Grid layout for recipes */
-.search-results-container > .search-results-container {
+.search-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; /* centers fixed-width cards */
+  justify-content: center;
 }
 
-/* Individual recipe card */
-.search-recipe-card {
-  width: 320px; /* fixed width on PC */
+.recipe-card {
+  width: 320px;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 16px;
   box-sizing: border-box;
   display: flex;
@@ -34,73 +30,50 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.search-recipe-card:hover {
+.recipe-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Title link */
-.recipe-link h2 {
-  font-size: 1.2rem;
-  color: #222;
-  margin-bottom: 8px;
+.recipe-name-link {
   text-decoration: none;
+  color: #222;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
 }
 
-/* Image wrapper with fixed height */
 .recipe-image-wrapper {
   width: 100%;
   height: 180px;
   overflow: hidden;
-  border-radius: 8px;
-  margin: 10px 0;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-.search-recipe-image {
+.recipe-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Save/Unsave button */
-.save-btn {
-  align-self: flex-end;
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 8px;
-  transition: background-color 0.2s;
-}
-
-.save-btn:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-}
-
-.save-btn:hover:not(:disabled) {
-  background-color: #27ae60;
-}
-
-/* Cooking time */
-.search-recipe-card p {
+.cooking-time {
   font-size: 0.9rem;
   color: #666;
+  margin-top: auto;
 }
 
-/* Responsive adjustments */
 @media (max-width: 992px) {
-  .search-recipe-card {
-    width: 48%;
+  .recipe-card {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
   }
 }
 
 @media (max-width: 600px) {
-  .search-recipe-card {
-    width: 100%;
+  .recipe-card {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }

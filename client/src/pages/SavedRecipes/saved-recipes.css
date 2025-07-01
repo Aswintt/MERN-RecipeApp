@@ -8,16 +8,18 @@
   font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
+  color: #333;
 }
+
 .saved-recipes-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; /* or space-between if you want edge-to-edge */
+  justify-content: center; /* Center cards */
 }
 
 .recipe-card {
-  width: 320px; /* 🔒 Fixed width on desktop */
+  width: 320px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -40,21 +42,14 @@
   font-size: 1.1rem;
   margin-bottom: 10px;
 }
-
-.unsave-button {
-  align-self: flex-end;
-  background-color: #ff4444;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.2s;
+.recipe-name-link h2 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 8px;
+  text-decoration: none;
 }
-
-.unsave-button:hover {
-  background-color: #cc0000;
+.recipe-image-link {
+  text-decoration: none;
 }
 
 .recipe-image-wrapper {
@@ -78,7 +73,7 @@
   margin-top: auto;
 }
 
-/* 🔁 Responsive layout */
+/* Responsive layout */
 @media (max-width: 992px) {
   .recipe-card {
     flex: 1 1 calc(50% - 20px);

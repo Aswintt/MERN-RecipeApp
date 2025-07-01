@@ -63,8 +63,13 @@ export const userLogin = async (req, res) => {
     return res.json({ message: "Username or Password is Incorrect! " });
   }
 
-  const token = jwt.sign({ id: user._id }, "secret");
-  res.json({ token, userID: user._id, verify: "verify" });
+  const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "1d" });
+  res.json({
+    token,
+    userID: user._id,
+    userName: user.username,
+    verify: "verify",
+  });
 };
 
 export const forgotPassword = async (req, res) => {

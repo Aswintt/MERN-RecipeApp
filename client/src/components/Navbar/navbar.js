@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./navbar.css";
-import { useHasJwtCookie } from "../../hooks/useGetUserID";
+import { useHasJwtCookie, useGetUserName } from "../../hooks/useGetUserID.js";
 
 const Navbar = () => {
   const [cookies, setCookies, removeCookie] = useCookies(["access_token"]);
@@ -40,7 +40,7 @@ const Navbar = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  const currentUser = useGetUserName();
   const hasJwt = useHasJwtCookie();
   return (
     <nav className="navx-navbar">
@@ -110,7 +110,7 @@ const Navbar = () => {
             </Link>
 
             <button onClick={handleLogout} className="navx-logout-btn">
-              Logout
+              Logout {currentUser}
             </button>
           </>
         )}

@@ -1,15 +1,16 @@
+// Home.js
 import "./home.css";
 import React, { useEffect, useState } from "react";
-import { useGetUserID } from "../hooks/useGetUserID";
+import { useGetUserID } from "../../hooks/useGetUserID.js";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import { SaveButton } from "../../components/SaveButton/SaveButton.js";
 
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [cookies] = useCookies(["access_token"]);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +24,6 @@ export const Home = () => {
         );
         setRecipes(response.data);
       } catch (err) {
-        // console.error("Error fetching recipes:", err);
         setError("Failed to fetch recipes. Please try again later.");
       } finally {
         setLoading(false);
@@ -35,34 +35,18 @@ export const Home = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/recipes/savedRecipes/ids/${userID}`
         );
-        setSavedRecipes(response.data.savedRecipes);
+        setSavedRecipes(response.data.savedRecipes || []);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching saved recipes:", err);
       }
     };
 
     fetchRecipes();
-    if (cookies.access_token) fetchSavedRecipes();
-  }, [userID, cookies]);
 
-  const saveRecipe = async (recipeID) => {
-    try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_SERVER_URL}/recipes`,
-        {
-          recipeID,
-          userID,
-        },
-        { headers: { authorization: cookies.access_token } }
-      );
-      setSavedRecipes(response.data.savedRecipes);
-    } catch (err) {
-      alert("Please Login to save Recipes!");
-      // console.log(err);
+    if (cookies.access_token && userID) {
+      fetchSavedRecipes();
     }
-  };
-
-  const isRecipeSaved = (id) => savedRecipes.includes(id);
+  }, [cookies, userID]);
 
   return (
     <div className="homefeed-container">
@@ -72,7 +56,7 @@ export const Home = () => {
       ) : error ? (
         <h2>{error}</h2>
       ) : recipes.length === 0 ? (
-        <h2>Recipes not found!</h2>
+        <h2>No recipes found.</h2>
       ) : (
         <div className="homefeed-grid">
           {recipes.map((recipe) => (
@@ -84,13 +68,12 @@ export const Home = () => {
                 <h2>{recipe.name}</h2>
               </Link>
 
-              <button
-                onClick={() => saveRecipe(recipe._id)}
-                disabled={isRecipeSaved(recipe._id)}
-                className="homefeed-save-btn"
-              >
-                {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-              </button>
+              <SaveButton
+                key={recipe._id}
+                recipeID={recipe._id}
+                savedRecipes={savedRecipes}
+                setSavedRecipes={setSavedRecipes}
+              />
 
               <Link
                 to={`/recipe/${recipe.slug}`}

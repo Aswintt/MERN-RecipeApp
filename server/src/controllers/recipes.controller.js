@@ -20,18 +20,6 @@ export const createRecipe = async (req, res) => {
   }
 };
 
-export const saveRecipe = async (req, res) => {
-  try {
-    const recipe = await RecipesModel.findById(req.body.recipeID);
-    const user = await UserModel.findById(req.body.userID);
-    user.savedRecipes.push(recipe);
-    await user.save();
-    res.json({ savedRecipes: user.savedRecipes });
-  } catch (err) {
-    res.json(err);
-  }
-};
-
 export const getSavedRecipes = async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userID);
@@ -40,7 +28,7 @@ export const getSavedRecipes = async (req, res) => {
     });
     res.json({ savedRecipes });
   } catch (err) {
-    res.json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -64,12 +52,20 @@ export const unsaveRecipe = async (req, res) => {
   }
 };
 
-export const checkIfSaved = async (req, res) => {
+export const getSavedRecipeIDs = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.userID);
-    res.json({ savedRecipes: user?.savedRecipes });
+    const user = await UserModel.findById(req.params.userID).select(
+      "savedRecipes"
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ savedRecipes: user.savedRecipes });
   } catch (err) {
-    res.json(err);
+    console.error("Error fetching saved recipes:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
@@ -116,5 +112,30 @@ export const reportRecipe = async (req, res) => {
     res.json({ success: true, message: "Report submitted" });
   } catch (err) {
     res.status(500).json({ error: "Failed to report post" });
+  }
+};
+
+export const toggleSaveRecipe = async (req, res) => {
+  try {
+    const { recipeID, userID } = req.body;
+    const user = await UserModel.findById(userID);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const index = user.savedRecipes.indexOf(recipeID);
+    if (index === -1) {
+      user.savedRecipes.push(recipeID); // Save
+    } else {
+      user.savedRecipes.splice(index, 1); // Unsave
+    }
+
+    await user.save();
+
+    res.json({
+      message: index === -1 ? "Recipe saved." : "Recipe unsaved.",
+      savedRecipes: user.savedRecipes,
+    });
+  } catch (err) {
+    console.error("Error toggling saved recipe:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };

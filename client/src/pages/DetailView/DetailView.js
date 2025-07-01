@@ -4,21 +4,19 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useGetUserID } from "../../hooks/useGetUserID";
+import { SaveButton } from "../../components/SaveButton/SaveButton";
 
 const DetailView = () => {
   const { slug } = useParams();
   const [cookies] = useCookies(["access_token"]);
   const [recipe, setRecipe] = useState(null);
-  // const [me, setMe] = useState([]);
+  const [savedRecipes, setSavedRecipes] = useState([]);
   const [showReportInput, setShowReportInput] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
-
-  const [savedRecipes, setSavedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const userID = useGetUserID();
-  // console.log(userID);
-  // Fetch recipe by slug
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -33,30 +31,20 @@ const DetailView = () => {
       }
     };
 
-    fetchRecipe();
-  }, [slug]);
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/recipes/savedRecipes/ids/${userID}`
+        );
+        setSavedRecipes(response.data.savedRecipes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const saveRecipe = async (recipeID, userID) => {
-    if (!cookies.access_token) {
-      alert("Please login to save recipes.");
-      return;
-    }
-    try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_SERVER_URL}/recipes`,
-        {
-          recipeID,
-          userID,
-        },
-        { headers: { authorization: cookies.access_token } }
-      );
-      setSavedRecipes(response.data.savedRecipes);
-    } catch (err) {
-      alert("something wrong");
-      // console.log(err);
-    }
-  };
-  // console.log(savedRecipes);
+    fetchRecipe();
+    if (cookies.access_token) fetchSavedRecipes();
+  }, [slug, cookies.access_token, userID]);
 
   const handleReport = async () => {
     if (!reportMessage.trim()) return;
@@ -80,14 +68,13 @@ const DetailView = () => {
     <div className="detail-container">
       <div className="detail-header">
         <h1>{recipe.name}</h1>
-        {!savedRecipes.includes(recipe._id) && (
-          <button
-            onClick={() => saveRecipe(recipe._id, userID)}
-            className="save-btn"
-          >
-            Save
-          </button>
-        )}
+
+        <SaveButton
+          key={recipe._id}
+          recipeID={recipe._id}
+          savedRecipes={savedRecipes}
+          setSavedRecipes={setSavedRecipes}
+        />
 
         <span>
           Created by{" "}
@@ -109,6 +96,7 @@ const DetailView = () => {
           </span>
         ))}
       </div>
+
       <div className="report-container">
         {showReportInput && (
           <input
