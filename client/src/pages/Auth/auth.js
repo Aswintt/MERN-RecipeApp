@@ -70,7 +70,7 @@ const Login = () => {
       );
 
       if (response.data.message) {
-        setError(response.data.message); // ✅ Show error message from backend
+        setError(response.data.message); //  Show error message from backend
         return;
       }
 
@@ -99,6 +99,7 @@ const Login = () => {
       showPassword={showPassword}
       setShowPassword={setShowPassword}
       hide="hideMail"
+      userLabel="Email or Username"
     />
   );
 };
@@ -131,14 +132,26 @@ const Register = () => {
     }
 
     // If all validations pass
-    setError("");
+
     try {
-      await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
-        email,
-        username,
-        password,
-      });
-      alert("Registration Completed! Now Login.");
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/auth/register`,
+        {
+          email,
+          username,
+          password,
+        }
+      );
+      if (response.data.message) {
+        setError(response.data.message); // Show error message from backend
+        return;
+      }
+      setError("");
+      if (response.data.fMessage) {
+        setTimeout(() => {
+          alert("User Registered successfully! Now Login.");
+        }, 1000);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -156,6 +169,7 @@ const Register = () => {
       error={error}
       email={email}
       setEmail={setEmail}
+      userLabel="Username"
     />
   );
 };
@@ -173,6 +187,7 @@ const Form = ({
   email,
   setEmail,
   hide,
+  userLabel,
 }) => {
   return (
     <div className="auth2-container">
@@ -188,11 +203,12 @@ const Form = ({
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             className="auth2-input"
+            placeholder="Enter your email"
           />
         </div>
         <div className="auth2-form-group">
           <label htmlFor="username" className="auth2-label">
-            Username:
+            {userLabel}:
           </label>
           <input
             type="text"
@@ -200,6 +216,7 @@ const Form = ({
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             className="auth2-input"
+            placeholder={`Enter your ${userLabel.toLowerCase()}`}
             required
           />
         </div>
@@ -221,6 +238,7 @@ const Form = ({
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               className="auth2-input"
+              placeholder="Enter your password"
               required
             />
           </div>

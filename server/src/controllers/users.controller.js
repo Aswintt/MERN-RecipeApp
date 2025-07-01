@@ -26,6 +26,23 @@ export const getMe = async (req, res) => {
 export const userRegister = async (req, res) => {
   const { username, email, password } = req.body;
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+  if (!emailRegex.test(email)) {
+    return res.json({ message: "Invalid email address." });
+  }
+
+  if (!usernameRegex.test(username)) {
+    return res.json({ message: "Username should not contain symbols." });
+  }
+
+  if (!password || password.length < 6) {
+    return res.json({
+      message: "Password must be at least 6 characters long.",
+    });
+  }
   try {
     const user = await UserModel.findOne({ email });
     if (user) {
@@ -44,7 +61,7 @@ export const userRegister = async (req, res) => {
     });
 
     await newUser.save();
-    res.json({ message: "User Registered successfully!" });
+    res.json({ fMessage: "User Registered successfully!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
